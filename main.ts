@@ -79,27 +79,23 @@ function noArgs(flags: Args) {
 }
 
 if (noArgs(flags) || flags.help) {
-  console.log(`
-wcarbon 1.0.0 
-
-Author: Tim Hårek Andreassen <tim@harek.no>
-Source: https://github.com/timharek/wcarbon
-
-USAGE: 
-  wcarbon [OPTIONS] [FLAGS]
-
-OPTIONS:
-  -h, --help        Prints this help message.
-  -s, --short       Give the output in the short-format.
-  -l, --long        Give the output in the long-format (default).
-  -u, --url <url>   Test <url> with Website Carbons API and get results in either
-                    long- or short-format.
-
-
-EXAMPLES:
-  $ wcarbon -u https://timharek.no
-  $ wcarbon -su https://timharek.no
-              `);
+  console.log('wcarbon 1.0.0');
+  console.log('Query webpages (URLs) via Website Carbons API.');
+  console.log();
+  console.log('%cAUTHOR', 'font-weight: bold', 'Tim Hårek Andreassen <tim@harek.no>');
+  console.log('%cSOURCE', 'font-weight: bold', 'https://github.com/timharek/wcarbon');
+  console.log();
+  console.log('%cUSAGE', 'font-weight: bold', '\n\twcarbon [OPTIONS]');
+  console.log();
+  console.log('%cOPTIONS', 'font-weight: bold');
+  console.log('\t-h, --help     Prints this help message');
+  console.log('\t-s, --short    Give the output in the short-format.');
+  console.log('\t-l, --long     Give the output in the long-format (default).');
+  console.log('\t-u, --url      Test <url> with Website Carbons API and get results in either long- or short-format.');
+  console.log();
+  console.log('%cEXAMPLES', 'font-weight: bold');
+  console.log('\t$ wcarbon -u https://timharek.no');
+  console.log('\t$ wcarbon -su https://timharek.no');
   Deno.exit(1);
 }
 
