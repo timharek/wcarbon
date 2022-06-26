@@ -1,13 +1,15 @@
 # wcarbon
 
-CLI tool for checking websites against [WebsiteCarbon].
+CLI tool for checking websites against
+[WebsiteCarbon API](https://api.websitecarbon.com/).
 
 It's fast and simple to use.
 
 ## Installation
 
 1. Install [Deno](https://deno.land)
-1. Run `deno install --allow-net -n wcarbon https://raw.githubusercontent.com/timharek/wcarbon/main/main.ts`
+1. Run
+   `deno install --allow-net -n wcarbon https://raw.githubusercontent.com/timharek/wcarbon/main/main.ts`
 1. Done, you can now simply run `wcarbon` on your machine!
 
 ## Usage
