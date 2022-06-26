@@ -1,4 +1,4 @@
-import { parse } from 'https://deno.land/std@0.130.0/flags/mod.ts';
+import { parse, Args } from 'https://deno.land/std@0.145.0/flags/mod.ts';
 
 const options = {
   api: '',
@@ -6,11 +6,32 @@ const options = {
   type: 'site'
 };
 
-const REQUEST_URL = 'https://api.websitecarbon.com/';
-
 interface Query {
   url?: string
 }
+
+interface SiteResponse {
+  url: string
+  green: boolean | 'unknown'
+  bytes: number
+  cleanerThan: number
+  statistics: {
+    adjustedBy: number
+    energy: number
+    co2: {
+      grid: {
+        grams: number
+        litres: number
+      }
+      renewable: {
+        grams: number
+        litres: number
+      }
+    }
+  }
+}
+
+const REQUEST_URL = 'https://api.websitecarbon.com/';
 
 const flags = parse(Deno.args, {
   boolean: ['help', 'short', 'long'],
@@ -33,14 +54,29 @@ async function query(query: Query, format: string) {
     .then((response) => response.json())
     .catch((error) => {
       console.log(error);
-    });
+    }) as SiteResponse;
 
   if (format == 'long') {
     return result;
   }
+
+  return {
+    green: result.green,
+    size: `${(result.bytes / 1024).toFixed(1)} kB`,
+    cleanerThan: `${result.cleanerThan * 100}%`,
+    energy_pr_load: `${result.statistics.energy} kW_g`,
+    co2: {
+      grid: `${result.statistics.co2.grid.grams.toFixed(4)} g`,
+      renewable: `${result.statistics.co2.renewable.grams.toFixed(4)} g`,
+    }
+  }
 }
 
-if (!flags || flags.help) {
+function noArgs(flags: Args) {
+  return Object.values(flags).every(flag => flag === false || flag === undefined || flag.length === 0)
+}
+
+if (noArgs(flags) || flags.help) {
   console.log(`
 wcarbon 1.0.0 
 
@@ -59,14 +95,9 @@ OPTIONS:
 
 
 EXAMPLES:
-  $ wcarbon
-  $ 
+  $ wcarbon -u https://timharek.no
+  $ wcarbon -su https://timharek.no
               `);
-  Deno.exit(1);
-}
-
-if (flags.title && flags.id || flags.id && flags.title) {
-  console.error('Cannot use ID in conjuction with title');
   Deno.exit(1);
 }
 

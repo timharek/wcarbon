@@ -13,7 +13,8 @@ It's fast and simple to use.
 ## Usage
 
 ```bash
-wcarbon '
+$ wcarbon -u https://timharek.no
+$ wcarbon -su https://timharek.no
 ```
 
 See `wcarbon -h` for all available flags and commands.
