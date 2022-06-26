@@ -1,34 +1,34 @@
-import { parse, Args } from 'https://deno.land/std@0.145.0/flags/mod.ts';
+import { Args, parse } from 'https://deno.land/std@0.145.0/flags/mod.ts';
 
 const options = {
   api: '',
   format: 'long',
-  type: 'site'
+  type: 'site',
 };
 
 interface Query {
-  url?: string
+  url?: string;
 }
 
 interface SiteResponse {
-  url: string
-  green: boolean | 'unknown'
-  bytes: number
-  cleanerThan: number
+  url: string;
+  green: boolean | 'unknown';
+  bytes: number;
+  cleanerThan: number;
   statistics: {
-    adjustedBy: number
-    energy: number
+    adjustedBy: number;
+    energy: number;
     co2: {
       grid: {
-        grams: number
-        litres: number
-      }
+        grams: number;
+        litres: number;
+      };
       renewable: {
-        grams: number
-        litres: number
-      }
-    }
-  }
+        grams: number;
+        litres: number;
+      };
+    };
+  };
 }
 
 const REQUEST_URL = 'https://api.websitecarbon.com/';
@@ -68,12 +68,14 @@ async function query(query: Query, format: string) {
     co2: {
       grid: `${result.statistics.co2.grid.grams.toFixed(4)} g`,
       renewable: `${result.statistics.co2.renewable.grams.toFixed(4)} g`,
-    }
-  }
+    },
+  };
 }
 
 function noArgs(flags: Args) {
-  return Object.values(flags).every(flag => flag === false || flag === undefined || flag.length === 0)
+  return Object.values(flags).every((flag) =>
+    flag === false || flag === undefined || flag.length === 0
+  );
 }
 
 if (noArgs(flags) || flags.help) {
@@ -106,5 +108,5 @@ if (flags.short) {
 }
 
 if (flags.url) {
-  console.log(await query({ url: flags.url }, options.format))
+  console.log(await query({ url: flags.url }, options.format));
 }
