@@ -1,14 +1,8 @@
 import { Args, parse } from 'https://deno.land/std@0.145.0/flags/mod.ts';
 
 const options = {
-  api: '',
   format: 'long',
-  type: 'site',
 };
-
-interface Query {
-  url?: string;
-}
 
 interface SiteResponse {
   url: string;
@@ -31,7 +25,7 @@ interface SiteResponse {
   };
 }
 
-const REQUEST_URL = 'https://api.websitecarbon.com/';
+const REQUEST_URL = new URL('https://api.websitecarbon.com/site');
 
 const flags = parse(Deno.args, {
   boolean: ['help', 'short', 'long'],
@@ -39,13 +33,10 @@ const flags = parse(Deno.args, {
   alias: { 'url': ['u'], 'short': ['s'], 'long': ['l'], 'help': ['h'] },
 });
 
-async function query(query: Query, format: string) {
-  let queryUrl = `${REQUEST_URL}${options.type}?`;
-  if (options.type === 'site' && query.url) {
-    queryUrl += `url=${query.url}`;
-  }
+async function querySite(url: string, format: string) {
+  REQUEST_URL.searchParams.set('url', url)
 
-  const result = await fetch(queryUrl, {
+  const result = await fetch(REQUEST_URL, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -104,5 +95,5 @@ if (flags.short) {
 }
 
 if (flags.url) {
-  console.log(await query({ url: flags.url }, options.format));
+  console.log(await querySite(flags.url, options.format));
 }
