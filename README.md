@@ -1,7 +1,7 @@
 
 # WCarbon
 
-*A simple and fast CLI tool for checking* <br>
+*A fast and easy to use CLI tool for checking* <br>
 *websites against the **[WebsiteCarbon API]**.*
 
 <br>
@@ -13,9 +13,9 @@
 2.  Install the command with:
 
     ```shell
-    deno install \
-        --allow-net
-        --name wcarbon
+    deno install        \
+        --allow-net     \
+        --name wcarbon  \
         https://raw.githubusercontent.com/timharek/wcarbon/main/main.ts
     ```
 
