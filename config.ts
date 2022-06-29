@@ -46,6 +46,12 @@ export const CONFIG: Options = {
         'Calculate the emissions of a page by manually passing the bytes and whether or not it is powered by green hosting.',
     },
   ],
+  examples: [
+    'wcarbon -u https://timharek.no',
+    'wcarbon -su https://timharek.no',
+    'wcarbon -b 1195673',
+    'wcarbon -sgb 1195673',
+  ],
 };
 
 export const FLAGS = parse(Deno.args, {
