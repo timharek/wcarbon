@@ -2,7 +2,7 @@ import { Options, parse } from './deps.ts';
 
 export const CONFIG: Options = {
   name: 'wcarbon',
-  version: '1.0.2',
+  version: '1.1.0',
   description: 'Query webpages (URLs) via Website Carbons API.',
   author: [{ name: 'Tim Hårek Andreassen', email: 'tim@harek.no' }],
   source: 'https://github.com/timharek/wcarbon',
@@ -47,6 +47,7 @@ export const CONFIG: Options = {
     },
   ],
   examples: [
+    'wcarbon timharek.no',
     'wcarbon -u https://timharek.no',
     'wcarbon -su https://timharek.no',
     'wcarbon -b 1195673',

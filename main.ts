@@ -1,9 +1,9 @@
-import { CONFIG, FLAGS } from './config.ts';
-import { Args, printHelp } from './deps.ts';
+import { CONFIG, FLAGS } from "./config.ts";
+import { Args, printHelp } from "./deps.ts";
 
 const options = {
-  format: 'long',
-  type: 'site',
+  format: "long",
+  type: "site",
 };
 
 interface Statistics {
@@ -23,7 +23,7 @@ interface Statistics {
 
 interface SiteResponse {
   url: string;
-  green: boolean | 'unknown';
+  green: boolean | "unknown";
   bytes: number;
   cleanerThan: number;
   statistics: Statistics;
@@ -34,13 +34,13 @@ interface DataResponse {
   statistics: Statistics;
 }
 
-const REQUEST_URL = 'https://api.websitecarbon.com';
+const REQUEST_URL = "https://api.websitecarbon.com";
 
 async function _fetch(url: URL) {
   return await fetch(url, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      Accept: 'application/json',
+      Accept: "application/json",
     },
   })
     .then((response) => response.json())
@@ -51,11 +51,11 @@ async function _fetch(url: URL) {
 
 async function querySite(url: string, format: string) {
   const requestUrl = new URL(`${REQUEST_URL}/site`);
-  requestUrl.searchParams.set('url', url);
+  requestUrl.searchParams.set("url", url);
 
   const result = (await _fetch(requestUrl)) as SiteResponse;
 
-  if (format == 'long') {
+  if (format == "long") {
     return result;
   }
 
@@ -73,12 +73,12 @@ async function querySite(url: string, format: string) {
 
 async function queryData(bytes: string, green: number, format: string) {
   const requestUrl = new URL(`${REQUEST_URL}/data`);
-  requestUrl.searchParams.set('bytes', `${bytes}`);
-  requestUrl.searchParams.set('green', `${green}`);
+  requestUrl.searchParams.set("bytes", `${bytes}`);
+  requestUrl.searchParams.set("green", `${green}`);
 
   const result = (await _fetch(requestUrl)) as DataResponse;
 
-  if (format == 'long') {
+  if (format == "long") {
     return result;
   }
 
@@ -94,8 +94,24 @@ async function queryData(bytes: string, green: number, format: string) {
 
 function noArgs(flags: Args) {
   return Object.values(flags).every(
-    (flag) => flag === false || flag === undefined || flag.length === 0,
+    (flag) => flag === false || flag === undefined || flag.length === 0
   );
+}
+
+function isValidUrl(url: string) {
+  try {
+    if (!/(http|https)?:\/\/(\S+)/.test(url)) {
+      url = `https://${url}`
+    }
+    new URL(url);
+    return true;
+  } catch (_err) {
+    console.error(
+      "%cInvalid URL",
+      "color: white; background-color: red; font-weight: bold"
+    );
+    return false;
+  }
 }
 
 if (noArgs(FLAGS) || FLAGS.help) {
@@ -109,7 +125,23 @@ if (FLAGS.version) {
 }
 
 if (FLAGS.short) {
-  options.format = 'short';
+  options.format = "short";
+}
+
+if (FLAGS._) {
+  if (FLAGS._.length > 1) {
+    console.error(
+      "%cToo many arguments",
+      "color: white; background-color: red; font-weight: bold"
+    )
+    Deno.exit(-1);
+  }
+  const url = String(FLAGS._[0]);
+
+  if (!isValidUrl(url)) {
+    Deno.exit(-1);
+  }
+  console.log(await querySite(url, options.format));
 }
 
 if (FLAGS.url) {
@@ -118,6 +150,6 @@ if (FLAGS.url) {
 
 if (FLAGS.bytes) {
   console.log(
-    await queryData(FLAGS.bytes, FLAGS.green ? 1 : 0, options.format),
+    await queryData(FLAGS.bytes, FLAGS.green ? 1 : 0, options.format)
   );
 }
