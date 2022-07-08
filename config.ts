@@ -48,8 +48,8 @@ export const CONFIG: Options = {
   ],
   examples: [
     'wcarbon timharek.no',
-    'wcarbon -u https://timharek.no',
-    'wcarbon -su https://timharek.no',
+    'wcarbon -u timharek.no',
+    'wcarbon -su timharek.no',
     'wcarbon -b 1195673',
     'wcarbon -sgb 1195673',
   ],

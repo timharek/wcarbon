@@ -145,7 +145,11 @@ if (FLAGS._) {
 }
 
 if (FLAGS.url) {
-  console.log(await querySite(FLAGS.url, options.format));
+  const url = FLAGS.url;
+  if (!isValidUrl(url)) {
+    Deno.exit(-1);
+  }
+  console.log(await querySite(url, options.format));
 }
 
 if (FLAGS.bytes) {
