@@ -27,6 +27,7 @@ interface SiteResponse {
   bytes: number;
   cleanerThan: number;
   statistics: Statistics;
+  timestamp: number;
 }
 
 interface DataResponse {
@@ -68,6 +69,7 @@ async function querySite(url: string, format: string) {
       grid: `${result.statistics.co2.grid.grams.toFixed(4)} g`,
       renewable: `${result.statistics.co2.renewable.grams.toFixed(4)} g`,
     },
+    time: `${new Date().toISOString()}`,
     wcarbonUrl: getWebsiteCarbonUrl(url),
   };
 }
