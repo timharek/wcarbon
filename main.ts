@@ -62,7 +62,7 @@ async function querySite(url: string, format: string) {
 
   return {
     green: result.green,
-    size: `${(result.bytes / 1024).toFixed(1)} kB`,
+    size: calculateSize(result.bytes),
     cleanerThan: `${result.cleanerThan * 100}%`,
     energy_pr_load: `${result.statistics.energy} kW_g`,
     co2: {
@@ -93,6 +93,21 @@ async function queryData(bytes: string, green: number, format: string) {
       renewable: `${result.statistics.co2.renewable.grams.toFixed(4)} g`,
     },
   };
+}
+
+function calculateSize(number: number) {
+  const MB = 1000;
+  const GB = 1000 * MB;
+
+  const size = Number((number / 1024).toFixed(1));
+
+  if (size > MB) {
+    return `${(size / MB).toFixed(1)} MB`
+  } else if (size > GB) {
+    return `${(size / GB).toFixed(1)} GB`
+  }
+
+  return `${size} kB`
 }
 
 function noArgs(flags: Args) {
