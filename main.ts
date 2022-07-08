@@ -56,7 +56,7 @@ async function querySite(url: string, format: string) {
   const result = (await _fetch(requestUrl)) as SiteResponse;
 
   if (format == 'long') {
-    return result;
+    return { ...result, wcarbonUrl: getWebsiteCarbonUrl(url) };
   }
 
   return {
@@ -68,6 +68,7 @@ async function querySite(url: string, format: string) {
       grid: `${result.statistics.co2.grid.grams.toFixed(4)} g`,
       renewable: `${result.statistics.co2.renewable.grams.toFixed(4)} g`,
     },
+    wcarbonUrl: getWebsiteCarbonUrl(url),
   };
 }
 
@@ -112,6 +113,21 @@ function isValidUrl(url: string) {
     );
     return false;
   }
+}
+
+function slugify(text: string) {
+  return text
+    .toString() // Cast to string (optional)
+    .normalize('NFKD') // The normalize() using NFKD method returns the Unicode Normalization Form of a given string.
+    .toLowerCase() // Convert the string to lowercase letters
+    .trim() // Remove whitespace from both sides of a string (optional)
+    .replace(/\./g, '-') // Replace spaces with -
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/\-\-+/g, '-'); // Replace multiple - with single -
+}
+
+function getWebsiteCarbonUrl(url: string) {
+  return `https://websitecarbon.com/website/${slugify(url)}`;
 }
 
 if (noArgs(FLAGS) || FLAGS.help) {
