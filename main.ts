@@ -64,7 +64,7 @@ async function querySite(url: string, format: string) {
     green: result.green,
     size: calculateSize(result.bytes),
     cleanerThan: `${result.cleanerThan * 100}%`,
-    energy_pr_load: `${result.statistics.energy} kW_g`,
+    energy_pr_load: calculateEnergy(result.statistics.energy),
     co2: {
       grid: `${result.statistics.co2.grid.grams.toFixed(4)} g`,
       renewable: `${result.statistics.co2.renewable.grams.toFixed(4)} g`,
@@ -87,7 +87,7 @@ async function queryData(bytes: string, green: number, format: string) {
 
   return {
     cleanerThan: `${result.cleanerThan * 100}%`,
-    energy_pr_load: `${result.statistics.energy} kW_g`,
+    energy_pr_load: calculateEnergy(result.statistics.energy),
     co2: {
       grid: `${result.statistics.co2.grid.grams.toFixed(4)} g`,
       renewable: `${result.statistics.co2.renewable.grams.toFixed(4)} g`,
@@ -102,12 +102,20 @@ function calculateSize(number: number) {
   const size = Number((number / 1024).toFixed(1));
 
   if (size > MB) {
-    return `${(size / MB).toFixed(1)} MB`
+    return `${(size / MB).toFixed(1)} MB`;
   } else if (size > GB) {
-    return `${(size / GB).toFixed(1)} GB`
+    return `${(size / GB).toFixed(1)} GB`;
   }
 
-  return `${size} kB`
+  return `${size} kB`;
+}
+
+function calculateEnergy(amount: number) {
+  if (amount > 1) {
+    return `${amount.toFixed(1)} kW /g`;
+  }
+
+  return `${(amount * 1000).toFixed(1)} W /g`;
 }
 
 function noArgs(flags: Args) {
