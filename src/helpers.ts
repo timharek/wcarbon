@@ -38,6 +38,14 @@ export function noArgs(flags: Args) {
 
 /** Checks if an URL is valid, also checks URL is provided with HTTP(S). */
 export function isValidUrl(url: string) {
+  // Checks if there is a period in case there is no TLD provided.
+  if (!/\./.test(url)) {
+    console.error(
+      '%cDid you forget to provide a TLD?',
+      'color: white; background-color: red; font-weight: bold',
+    )
+    return false;
+  }
   try {
     if (!/(http|https)?:\/\/(\S+)/.test(url)) {
       url = `https://${url}`;

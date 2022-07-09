@@ -1,5 +1,5 @@
-import { assertEquals } from 'https://deno.land/std@0.147.0/testing/asserts.ts';
-import { calculateSize } from './src/helpers.ts'
+import { assertEquals, assertFalse } from 'https://deno.land/std@0.147.0/testing/asserts.ts';
+import { calculateSize, isValidUrl } from './src/helpers.ts'
 
 Deno.test('Verify that 1024 B returns 1 kB', () => {
   const initialSize = 1024;
@@ -23,4 +23,22 @@ Deno.test('Verify that 8589934592 B returns 8.0 GB', () => {
   const calculatedSize = calculateSize(initialSize);
 
   assertEquals(calculatedSize, '8 GB');
+})
+
+Deno.test('Verify that `https://example.org` is a valid URL', () => {
+  const url = 'https://example.org';
+
+  assertEquals(isValidUrl(url), true);
+})
+
+Deno.test('Verify that `example.org` is a valid URL', () => {
+  const url = 'example.org';
+
+  assertEquals(isValidUrl(url), true);
+})
+
+Deno.test('Verify that `https://example` is not a valid URL', () => {
+  const url = 'https://example';
+
+  assertFalse(isValidUrl(url));
 })
