@@ -1,6 +1,10 @@
 // @deno-types='../mod.d.ts'
-import { calculateSize, calculateEnergy, getWebsiteCarbonUrl } from './helpers.ts';
-import { REQUEST_URL } from '../config.ts'
+import {
+  calculateEnergy,
+  calculateSize,
+  getWebsiteCarbonUrl,
+} from './helpers.ts';
+import { REQUEST_URL } from '../config.ts';
 
 export async function _fetch(url: URL) {
   return await fetch(url, {
@@ -59,4 +63,3 @@ export async function queryData(bytes: string, green: number, format: string) {
     },
   };
 }
-

@@ -1,7 +1,7 @@
 import { CONFIG, FLAGS } from './config.ts';
 import { printHelp } from './deps.ts';
 import { isValidUrl, noArgs } from './src/helpers.ts';
-import { querySite, queryData } from './src/query_api.ts';
+import { queryData, querySite } from './src/query_api.ts';
 
 const options = {
   format: 'long',

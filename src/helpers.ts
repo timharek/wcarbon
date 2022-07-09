@@ -11,7 +11,7 @@ export function calculateSize(number: number) {
     return `${getSizeString(number, GB)} GB`;
   } else if (number > MB) {
     return `${getSizeString(number, MB)} MB`;
-  } 
+  }
 
   return `${getSizeString(number, kB)} kB`;
 }
@@ -43,7 +43,7 @@ export function isValidUrl(url: string) {
     console.error(
       '%cDid you forget to provide a TLD?',
       'color: white; background-color: red; font-weight: bold',
-    )
+    );
     return false;
   }
   try {
@@ -87,4 +87,3 @@ export function getWebsiteCarbonUrl(url: string) {
   const shortUrl = stripHttpString(url);
   return `https://websitecarbon.com/website/${slugify(shortUrl)}`;
 }
-

@@ -26,4 +26,3 @@ interface DataResponse {
   cleanerThan: number;
   statistics: Statistics;
 }
-
