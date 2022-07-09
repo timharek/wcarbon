@@ -21,6 +21,6 @@
   },
 
   "tasks": {
-    "run": "deno run --allow-net main.ts"
+    "run": "deno run --allow-net mod.ts"
   }
 }
