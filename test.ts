@@ -1,5 +1,5 @@
-import { assertEquals, assertFalse } from 'https://deno.land/std@0.147.0/testing/asserts.ts';
-import { calculateSize, isValidUrl } from './src/helpers.ts'
+import { assertEquals, assertFalse, assertThrows } from 'https://deno.land/std@0.147.0/testing/asserts.ts';
+import { calculateSize, calculateEnergy, isValidUrl } from './src/helpers.ts'
 
 Deno.test('Verify that 1024 B returns 1 kB', () => {
   const initialSize = 1024;
@@ -42,3 +42,20 @@ Deno.test('Verify that `https://example` is not a valid URL', () => {
 
   assertFalse(isValidUrl(url));
 })
+
+Deno.test('Verify that `0.1` (kW /g) returns `100 W /g`', () => {
+  const initialEnergy = 0.1;
+
+  const calculatedEnergyString = calculateEnergy(initialEnergy);
+
+  assertEquals(calculatedEnergyString, '100.0 W /g');
+})
+
+Deno.test('Verify that `2.10023` (kW /g) returns `2.1 kW /g`', () => {
+  const initialEnergy = 2.10023;
+
+  const calculatedEnergyString = calculateEnergy(initialEnergy);
+
+  assertEquals(calculatedEnergyString, '2.1 kW /g');
+})
+
