@@ -4,7 +4,7 @@ export const REQUEST_URL = 'https://api.websitecarbon.com';
 
 export const CONFIG: Options = {
   name: 'wcarbon',
-  version: '1.1.1',
+  version: '1.1.2',
   description: 'Query webpages (URLs) via Website Carbons API.',
   author: [{ name: 'Tim Hårek Andreassen', email: 'tim@harek.no' }],
   source: 'https://github.com/timharek/wcarbon',
