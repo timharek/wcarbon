@@ -47,7 +47,7 @@ export function isValidUrl(url: string) {
     return false;
   }
   try {
-    if (!/(http|https)?:\/\/(\S+)/.test(url)) {
+    if (!containsHttpString(url)) {
       url = `https://${url}`;
     }
     new URL(url);
@@ -59,6 +59,15 @@ export function isValidUrl(url: string) {
     );
     return false;
   }
+}
+
+/** Checks if string contains HTTP(S). */
+function containsHttpString(url: string) {
+  return /(http|https)?:\/\/(\S+)/.test(url) ?? false;
+}
+
+export function stripHttpString(url: string) {
+  return containsHttpString(url) ? url.split('://')[1] : url;
 }
 
 /** Slugify a string. Ex. `example.org` becomes `example-org` */
@@ -75,6 +84,7 @@ export function slugify(text: string) {
 
 /** Get's URL for Website Carbon to see results based on provided @param url */
 export function getWebsiteCarbonUrl(url: string) {
-  return `https://websitecarbon.com/website/${slugify(url)}`;
+  const shortUrl = stripHttpString(url);
+  return `https://websitecarbon.com/website/${slugify(shortUrl)}`;
 }
 

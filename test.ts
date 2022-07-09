@@ -1,5 +1,5 @@
 import { assertEquals, assertFalse, assertThrows } from 'https://deno.land/std@0.147.0/testing/asserts.ts';
-import { calculateSize, calculateEnergy, isValidUrl } from './src/helpers.ts'
+import { calculateSize, calculateEnergy, isValidUrl, stripHttpString, getWebsiteCarbonUrl } from './src/helpers.ts'
 
 Deno.test('Verify that 1024 B returns 1 kB', () => {
   const initialSize = 1024;
@@ -59,3 +59,50 @@ Deno.test('Verify that `2.10023` (kW /g) returns `2.1 kW /g`', () => {
   assertEquals(calculatedEnergyString, '2.1 kW /g');
 })
 
+Deno.test('Verify that `https://` from `https://example.org` is removed', () => {
+  const url = 'https://example.org';
+
+  const urlWithoutHttp = stripHttpString(url)
+
+  assertEquals(urlWithoutHttp, 'example.org');
+})
+
+Deno.test('Verify that `http://` from `http://example.org` is removed', () => {
+  const url = 'http://example.org';
+
+  const urlWithoutHttp = stripHttpString(url)
+
+  assertEquals(urlWithoutHttp, 'example.org');
+})
+
+Deno.test('Verify that nothing is removed from URL `example.org`', () => {
+  const url = 'example.org';
+
+  const urlWithoutHttp = stripHttpString(url)
+
+  assertEquals(urlWithoutHttp, 'example.org');
+})
+
+Deno.test('Verify that `https://example.org` as a Website Carbon link is valid', () => {
+  const url = 'https://example.org';
+
+  const wcarbonUrl = getWebsiteCarbonUrl(url);
+
+  assertEquals(wcarbonUrl, 'https://websitecarbon.com/website/example-org');
+})
+
+Deno.test('Verify that `http://example.com` as a Website Carbon link is valid', () => {
+  const url = 'http://example.com';
+
+  const wcarbonUrl = getWebsiteCarbonUrl(url);
+
+  assertEquals(wcarbonUrl, 'https://websitecarbon.com/website/example-com');
+})
+
+Deno.test('Verify that `example.org` as a Website Carbon link is valid', () => {
+  const url = 'example.org';
+
+  const wcarbonUrl = getWebsiteCarbonUrl(url);
+
+  assertEquals(wcarbonUrl, 'https://websitecarbon.com/website/example-org');
+})
