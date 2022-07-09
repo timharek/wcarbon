@@ -1,5 +1,7 @@
 import { Options, parse } from './deps.ts';
 
+export const REQUEST_URL = 'https://api.websitecarbon.com';
+
 export const CONFIG: Options = {
   name: 'wcarbon',
   version: '1.1.0',
