@@ -20,3 +20,10 @@ $ wcarbon -su https://timharek.no
 ```
 
 See `wcarbon -h` for all available flags and commands.
+
+## Development
+
+1. Install [Deno](https://deno.land)
+1. Install [githooked](https://github.com/amethyst-studio/githooked/#installation)
+1. Run `githooked enable`
+1. Now you can get to work! :sunglasses:
