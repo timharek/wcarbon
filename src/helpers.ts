@@ -1,20 +1,26 @@
 import { Args } from '../deps.ts';
 
+/** Calculate the size of a @param number to a human-readable format. */
 export function calculateSize(number: number) {
-  const MB = 1000;
-  const GB = 1000 * MB;
+  // Sizes in bytes
+  const kB = 1024;
+  const MB = kB * kB;
+  const GB = MB * kB;
 
-  const size = Number((number / 1024).toFixed(1));
+  if (number > GB) {
+    return `${getSizeString(number, GB)} GB`;
+  } else if (number > MB) {
+    return `${getSizeString(number, MB)} MB`;
+  } 
 
-  if (size > MB) {
-    return `${(size / MB).toFixed(1)} MB`;
-  } else if (size > GB) {
-    return `${(size / GB).toFixed(1)} GB`;
-  }
-
-  return `${size} kB`;
+  return `${getSizeString(number, kB)} kB`;
 }
 
+function getSizeString(number: number, unit: number): string {
+  return `${Number((number / unit).toFixed(1))}`;
+}
+
+/** Calculate the energy of an @param amount to a human-readable format. */
 export function calculateEnergy(amount: number) {
   if (amount > 1) {
     return `${amount.toFixed(1)} kW /g`;
@@ -23,12 +29,14 @@ export function calculateEnergy(amount: number) {
   return `${(amount * 1000).toFixed(1)} W /g`;
 }
 
+/** Returns true if no argmuments are provided. */
 export function noArgs(flags: Args) {
   return Object.values(flags).every(
     (flag) => flag === false || flag === undefined || flag.length === 0,
   );
 }
 
+/** Checks if an URL is valid, also checks URL is provided with HTTP(S). */
 export function isValidUrl(url: string) {
   try {
     if (!/(http|https)?:\/\/(\S+)/.test(url)) {
@@ -45,6 +53,7 @@ export function isValidUrl(url: string) {
   }
 }
 
+/** Slugify a string. Ex. `example.org` becomes `example-org` */
 export function slugify(text: string) {
   return text
     .toString() // Cast to string (optional)
@@ -56,6 +65,7 @@ export function slugify(text: string) {
     .replace(/\-\-+/g, '-'); // Replace multiple - with single -
 }
 
+/** Get's URL for Website Carbon to see results based on provided @param url */
 export function getWebsiteCarbonUrl(url: string) {
   return `https://websitecarbon.com/website/${slugify(url)}`;
 }
