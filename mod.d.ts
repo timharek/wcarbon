@@ -26,3 +26,9 @@ interface DataResponse {
   cleanerThan: number;
   statistics: Statistics;
 }
+
+interface DataRequest {
+  bytes: number;
+  green: 1 | 0;
+  verbose: boolean;
+}
