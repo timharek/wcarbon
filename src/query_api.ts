@@ -3,8 +3,10 @@ import {
   calculateEnergy,
   calculateSize,
   getWebsiteCarbonUrl,
+  isValidUrl,
 } from './helpers.ts';
-import { REQUEST_URL } from '../config.ts';
+
+const REQUEST_URL = 'https://api.websitecarbon.com';
 
 export async function _fetch(url: URL) {
   return await fetch(url, {
@@ -19,13 +21,18 @@ export async function _fetch(url: URL) {
     });
 }
 
-export async function querySite(url: string, format: string) {
+export async function querySite(url: string, verbose: boolean) {
+  if (!isValidUrl(url)) {
+    console.error('Invalid URL');
+    Deno.exit(-1);
+  }
+
   const requestUrl = new URL(`${REQUEST_URL}/site`);
   requestUrl.searchParams.set('url', url);
 
   const result = (await _fetch(requestUrl)) as SiteResponse;
 
-  if (format == 'long') {
+  if (verbose) {
     return { ...result, wcarbonUrl: getWebsiteCarbonUrl(url) };
   }
 
@@ -43,14 +50,15 @@ export async function querySite(url: string, format: string) {
   };
 }
 
-export async function queryData(bytes: string, green: number, format: string) {
+export async function queryData(request: DataRequest) {
+  const { bytes, green, verbose } = request;
   const requestUrl = new URL(`${REQUEST_URL}/data`);
   requestUrl.searchParams.set('bytes', `${bytes}`);
   requestUrl.searchParams.set('green', `${green}`);
 
   const result = (await _fetch(requestUrl)) as DataResponse;
 
-  if (format == 'long') {
+  if (verbose) {
     return result;
   }
 
