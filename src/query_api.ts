@@ -1,4 +1,5 @@
 // @deno-types='../mod.d.ts'
+import { Colors } from '../deps.ts';
 import {
   calculateEnergy,
   calculateSize,
@@ -34,13 +35,21 @@ export async function querySite(url: string, verbose: number) {
 
   if (verbose < 1) {
     if (result.green === true) {
-      return `Hurrah! ${url} is is cleaner than ${
-        result.cleanerThan * 100
-      }% of web pages tested.`;
+      return Colors.black(
+        Colors.bgGreen(
+          `Hurrah! ${url} is is cleaner than ${
+            result.cleanerThan * 100
+          }% of web pages tested.`,
+        ),
+      );
     } else {
-      return `Uh oh! ${url} is is dirtier than ${
-        result.cleanerThan * 100
-      }% of web pages tested.`;
+      return Colors.black(
+        Colors.bgRed(
+          `Uh oh! ${url} is is dirtier than ${
+            result.cleanerThan * 100
+          }% of web pages tested.`,
+        ),
+      );
     }
   } else if (verbose === 1) {
     return {
