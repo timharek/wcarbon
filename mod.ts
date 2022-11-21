@@ -4,7 +4,7 @@ import { queryData, querySite } from './src/query_api.ts';
 
 await new Command()
   .name('wcarbon')
-  .version('1.2.0')
+  .version('1.3.0')
   .description('Query webpages (URLs) via Website Carbons API.')
   .meta('Author', 'Tim Hårek Andreassen <tim@harek.no>')
   .meta('Source', 'https://github.com/timharek/wcarbon')
@@ -16,17 +16,18 @@ await new Command()
     'Check site but verbose',
     `wcarbon check timharek.no -v`,
   )
-  .globalOption('-v, --verbose [value:boolean]', 'A more verbose output.', {
-    default: false,
+  .globalOption('-v, --verbose', 'A more verbose output.', {
+    collect: true,
+    value: (val: boolean, previous = 0) => val ? previous + 1 : 0,
   })
   .arguments('<url>')
-  .action(async (options: { verbose: boolean }, url: string) =>
-    console.log(await querySite(url, options.verbose))
+  .action(async (options: { verbose: number }, url: string) =>
+    console.log(await querySite(url, options.verbose ?? 0))
   )
   .command('site', 'Calculate the carbon emissions generated per page view.')
   .arguments('<url>')
-  .action(async (options: { verbose: boolean }, url: string) =>
-    console.log(await querySite(url, options.verbose))
+  .action(async (options: { verbose: number }, url: string) =>
+    console.log(await querySite(url, options.verbose ?? 0))
   )
   .command(
     'data',
@@ -38,15 +39,14 @@ await new Command()
   })
   .action(
     async (
-      options: { verbose: boolean; bytes: number; green: boolean },
+      options: { verbose: number; bytes: number; green: boolean },
       bytes: number,
     ) => {
       const request: DataRequest = {
         bytes,
         green: options.green ? 1 : 0,
-        verbose: options.verbose,
       };
-      console.log(await queryData(request));
+      console.log(await queryData(request, options.verbose));
     },
   )
   .parse(Deno.args);

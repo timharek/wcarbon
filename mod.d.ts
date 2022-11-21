@@ -30,5 +30,4 @@ interface DataResponse {
 interface DataRequest {
   bytes: number;
   green: 1 | 0;
-  verbose: boolean;
 }
