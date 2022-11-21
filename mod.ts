@@ -1,10 +1,10 @@
 // @deno-types='./mod.d.ts'
-import { Command } from './deps.ts';
+import { Command, GithubProvider, UpgradeCommand } from './deps.ts';
 import { queryData, querySite } from './src/query_api.ts';
 
 await new Command()
   .name('wcarbon')
-  .version('1.3.0')
+  .version('1.3.1')
   .description('Query webpages (URLs) via Website Carbons API.')
   .meta('Author', 'Tim Hårek Andreassen <tim@harek.no>')
   .meta('Source', 'https://github.com/timharek/wcarbon')
@@ -48,5 +48,13 @@ await new Command()
       };
       console.log(await queryData(request, options.verbose));
     },
+  )
+  .command(
+    'upgrade',
+    new UpgradeCommand({
+      main: 'mod.ts',
+      args: ['--allow-net'],
+      provider: [new GithubProvider({ repository: 'timharek/wcarbon' })],
+    }),
   )
   .parse(Deno.args);
