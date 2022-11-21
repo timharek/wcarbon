@@ -4,7 +4,7 @@ import { queryData, querySite } from './src/query_api.ts';
 
 await new Command()
   .name('wcarbon')
-  .version('1.3.1')
+  .version('1.3.2')
   .description('Query webpages (URLs) via Website Carbons API.')
   .meta('Author', 'Tim Hårek Andreassen <tim@harek.no>')
   .meta('Source', 'https://github.com/timharek/wcarbon')
