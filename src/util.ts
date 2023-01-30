@@ -1,7 +1,5 @@
 // @deno-types='../mod.d.ts'
 
-import { Args } from '../deps.ts';
-
 /** Calculate the size of a @param number to a human-readable format. */
 export function calculateSize(number: number) {
   // Sizes in bytes
@@ -29,13 +27,6 @@ export function calculateEnergy(amount: number) {
   }
 
   return `${(amount * 1000).toFixed(1)} W /g`;
-}
-
-/** Returns true if no argmuments are provided. */
-export function noArgs(flags: Args) {
-  return Object.values(flags).every(
-    (flag) => flag === false || flag === undefined || flag.length === 0,
-  );
 }
 
 /** Checks if an URL is valid, also checks URL is provided with HTTP(S). */

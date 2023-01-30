@@ -23,7 +23,7 @@ async function _fetch(url: URL) {
     });
 }
 
-export async function querySite(url: string, verbose: number) {
+export async function querySite(url: string, verbose = 0) {
   if (!isValidUrl(url)) {
     console.error('Invalid URL');
     Deno.exit(-1);
@@ -70,7 +70,7 @@ export async function querySite(url: string, verbose: number) {
   }
 }
 
-export async function queryData(request: DataRequest, verbose: number) {
+export async function queryData(request: DataRequest, verbose = 0) {
   const { bytes, green } = request;
   const requestUrl = new URL(`${REQUEST_URL}/data`);
   requestUrl.searchParams.set('bytes', `${bytes}`);
