@@ -1,6 +1,7 @@
-// @deno-types='./mod.d.ts'
-import { Command, GithubProvider, UpgradeCommand } from './deps.ts';
-import { queryData, querySite } from './src/query_api.ts';
+// @deno-types='../mod.d.ts'
+
+import { Command, GithubProvider, UpgradeCommand } from '../deps.ts';
+import { queryData, querySite } from './wcarbon.ts';
 
 await new Command()
   .name('wcarbon')

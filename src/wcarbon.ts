@@ -5,7 +5,7 @@ import {
   calculateSize,
   getWebsiteCarbonUrl,
   isValidUrl,
-} from './helpers.ts';
+} from './util.ts';
 
 const REQUEST_URL = 'https://api.websitecarbon.com';
 

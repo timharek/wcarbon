@@ -8,7 +8,7 @@ import {
   getWebsiteCarbonUrl,
   isValidUrl,
   stripHttpString,
-} from './src/helpers.ts';
+} from './util.ts';
 
 Deno.test('Verify that 1024 B returns 1 kB', () => {
   const initialSize = 1024;
