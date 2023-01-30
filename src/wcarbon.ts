@@ -1,4 +1,5 @@
 // @deno-types='../mod.d.ts'
+
 import { Colors } from '../deps.ts';
 import {
   calculateEnergy,
@@ -9,7 +10,7 @@ import {
 
 const REQUEST_URL = 'https://api.websitecarbon.com';
 
-export async function _fetch(url: URL) {
+async function _fetch(url: URL) {
   return await fetch(url, {
     method: 'GET',
     headers: {

@@ -1,3 +1,5 @@
+// @deno-types='../mod.d.ts'
+
 import { Args } from '../deps.ts';
 
 /** Calculate the size of a @param number to a human-readable format. */
