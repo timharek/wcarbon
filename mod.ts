@@ -1,5 +1,6 @@
 /**
- * Access Website Carbon's API for checking carbon emissions for websites.
+ * Access [Website Carbon's API](https://api.websitecarbon.com/) for checking
+ * carbon emissions for websites.
  *
  * ## Example for site
  * ```ts

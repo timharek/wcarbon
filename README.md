@@ -1,25 +1,45 @@
 # wcarbon
 
-CLI tool for checking websites against
-[WebsiteCarbon API](https://api.websitecarbon.com/).
-
-It's fast and simple to use.
-
-## Installation
-
-1. Install [Deno](https://deno.land)
-1. Run
-   `deno install --allow-net -n wcarbon https://raw.githubusercontent.com/timharek/wcarbon/main/mod.ts`
-1. Done, you can now simply run `wcarbon` on your machine!
+Access [Website Carbon's API](https://api.websitecarbon.com/) for checking
+carbon emissions for websites.
 
 ## Usage
 
-```bash
-$ wcarbon -u https://timharek.no
-$ wcarbon -su https://timharek.no
+## Example for site
+
+```ts
+import { querySite } from 'https://deno.land/x/wcarbon/mod.ts';
+
+const domain = 'example.org';
+const result = querySite(domain);
 ```
 
-See `wcarbon -h` for all available flags and commands.
+## Example for data
+
+```ts
+import { queryData } from 'https://deno.land/x/wcarbon/mod.ts';
+
+const bytes = '1024';
+const result = queryData(bytes);
+```
+
+## CLI
+
+### Installation
+
+```sh
+deno install --allow-net=api.websitecarbon.com \
+   -n wcarbon https://deno.land/x/wcarbon/src/cli.ts
+```
+
+### Usage
+
+```bash
+$ wcarbon timharek.no
+$ wcarbon site timharek.no
+$ wcarbon data 2048
+$ wcarbon -h # for all available flags and commands
+```
 
 ## Development
 
