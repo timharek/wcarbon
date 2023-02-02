@@ -25,9 +25,6 @@
       "proseWrap": "preserve"
     }
   },
-  "imports": {
-    "std/": "https://deno.land/std@0.175.0/"
-  },
   "tasks": {
     "run": "deno run --allow-net=api.websitecarbon.com,api.github.com src/cli.ts"
   }

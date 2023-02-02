@@ -35,7 +35,7 @@ const dateCmd = new Command()
 
 await new Command()
   .name('wcarbon')
-  .version('1.4.0')
+  .version('1.4.1')
   .description('Query webpages (URLs) via Website Carbons API.')
   .meta('Author', 'Tim Hårek Andreassen <tim@harek.no>')
   .meta('Source', 'https://github.com/timharek/wcarbon')
