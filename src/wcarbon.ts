@@ -2,6 +2,7 @@
 
 import { Colors } from '../deps.ts';
 import {
+  _fetch,
   calculateEnergy,
   calculateSize,
   getWebsiteCarbonUrl,
@@ -9,19 +10,6 @@ import {
 } from './util.ts';
 
 const REQUEST_URL = 'https://api.websitecarbon.com';
-
-async function _fetch(url: URL) {
-  return await fetch(url, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .catch((error) => {
-      console.log(error);
-    });
-}
 
 export async function querySite(url: string, verbose = 0) {
   if (!isValidUrl(url)) {

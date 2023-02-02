@@ -1,7 +1,30 @@
 // @deno-types='../mod.d.ts'
 
-/** Calculate the size of a @param number to a human-readable format. */
-export function calculateSize(number: number) {
+/**
+ * Helper fetch-function.
+ * @param url The URL to be fetched
+ * @returns
+ */
+export async function _fetch(url: URL): Promise<unknown> {
+  return await fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+/**
+ *  Calculate the size of a
+ *
+ * @param number to a human-readable format.
+ * @returns string
+ */
+export function calculateSize(number: number): string {
   // Sizes in bytes
   const kB = 1024;
   const MB = kB * kB;
@@ -20,8 +43,13 @@ function getSizeString(number: number, unit: number): string {
   return `${Number((number / unit).toFixed(1))}`;
 }
 
-/** Calculate the energy of an @param amount to a human-readable format. */
-export function calculateEnergy(amount: number) {
+/**
+ *  Calculate the energy of an
+ *
+ * @param amount to a human-readable format.
+ * @returns string
+ */
+export function calculateEnergy(amount: number): string {
   if (amount > 1) {
     return `${amount.toFixed(1)} kW /g`;
   }
@@ -29,8 +57,12 @@ export function calculateEnergy(amount: number) {
   return `${(amount * 1000).toFixed(1)} W /g`;
 }
 
-/** Checks if an URL is valid, also checks URL is provided with HTTP(S). */
-export function isValidUrl(url: string) {
+/**
+ * Checks if an URL is valid, also checks URL is provided with HTTP(S).
+ *
+ * @returns boolean
+ */
+export function isValidUrl(url: string): boolean {
   // Checks if there is a period in case there is no TLD provided.
   if (!/\./.test(url)) {
     console.error(
@@ -54,17 +86,26 @@ export function isValidUrl(url: string) {
   }
 }
 
-/** Checks if string contains HTTP(S). */
-function containsHttpString(url: string) {
+/**
+ * Checks if string contains HTTP(S).
+ *
+ * @returns boolean
+ */
+function containsHttpString(url: string): boolean {
   return /(http|https)?:\/\/(\S+)/.test(url) ?? false;
 }
 
-export function stripHttpString(url: string) {
+export function stripHttpString(url: string): string {
   return containsHttpString(url) ? url.split('://')[1] : url;
 }
 
-/** Slugify a string. Ex. `example.org` becomes `example-org` */
-export function slugify(text: string) {
+/**
+ * Slugify a string. Ex. `example.org` becomes `example-org`
+ *
+ * @param text String to slugified
+ * @return string slugified
+ */
+function slugify(text: string): string {
   return text
     .toString() // Cast to string (optional)
     .normalize('NFKD') // The normalize() using NFKD method returns the Unicode Normalization Form of a given string.
@@ -75,8 +116,13 @@ export function slugify(text: string) {
     .replace(/\-\-+/g, '-'); // Replace multiple - with single -
 }
 
-/** Get's URL for Website Carbon to see results based on provided @param url */
-export function getWebsiteCarbonUrl(url: string) {
+/**
+ * Get's URL for Website Carbon to see results based on provided
+ *
+ * @param url
+ * @returns string
+ */
+export function getWebsiteCarbonUrl(url: string): string {
   const shortUrl = stripHttpString(url);
   return `https://websitecarbon.com/website/${slugify(shortUrl)}`;
 }
