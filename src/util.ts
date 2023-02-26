@@ -1,5 +1,8 @@
 // @deno-types='../mod.d.ts'
 
+import { Colors } from '../deps.ts';
+import { querySite } from './wcarbon.ts';
+
 /**
  * Helper fetch-function.
  * @param url The URL to be fetched
@@ -125,4 +128,33 @@ function slugify(text: string): string {
 export function getWebsiteCarbonUrl(url: string): string {
   const shortUrl = stripHttpString(url);
   return `https://websitecarbon.com/website/${slugify(shortUrl)}`;
+}
+
+export async function getSiteResults(
+  url: string,
+  json: boolean,
+): Promise<string> {
+  const result = await querySite(url);
+
+  if (!json) {
+    if (result.green === true) {
+      return Colors.black(
+        Colors.bgGreen(
+          `Hurrah! ${url} is is cleaner than ${
+            result.cleanerThan * 100
+          }% of web pages tested.`,
+        ),
+      );
+    } else {
+      return Colors.black(
+        Colors.bgRed(
+          `Uh oh! ${url} is is dirtier than ${
+            result.cleanerThan * 100
+          }% of web pages tested.`,
+        ),
+      );
+    }
+  }
+
+  return JSON.stringify(result, null, 2);
 }

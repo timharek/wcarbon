@@ -1,14 +1,15 @@
 // @deno-types='../mod.d.ts'
 
 import { Command } from '../deps.ts';
-import { queryData, querySite } from './wcarbon.ts';
+import { queryData } from './wcarbon.ts';
+import { getSiteResults } from './util.ts';
 
 const siteCmd = new Command()
   .description('Calculate the carbon emissions generated per page view.')
   .example('Check specific site', 'wcarbon site timharek.no')
   .arguments('<url:string>')
-  .action(async (options: { verbose: number }, url: string) =>
-    console.log(await querySite(url, options.verbose ?? 0))
+  .action(async (options: { json: boolean }, url: string) =>
+    console.log(await getSiteResults(url, options.json))
   );
 
 const dateCmd = new Command()
@@ -29,13 +30,13 @@ const dateCmd = new Command()
         bytes,
         green: options.green ? 1 : 0,
       };
-      console.log(await queryData(request, options.verbose));
+      console.log(await queryData(request));
     },
   );
 
 await new Command()
   .name('wcarbon')
-  .version('1.4.1')
+  .version('2.0.0')
   .description('Query webpages (URLs) via Website Carbons API.')
   .meta('Author', 'Tim Hårek Andreassen <tim@harek.no>')
   .meta('Source', 'https://github.com/timharek/wcarbon')
@@ -43,13 +44,10 @@ await new Command()
     'Check site',
     `wcarbon timharek.no`,
   )
-  .globalOption('-v, --verbose', 'A more verbose output.', {
-    collect: true,
-    value: (val: boolean, previous = 0) => val ? previous + 1 : 0,
-  })
+  .globalOption('--json', 'Display JSON output.')
   .arguments('<url:string>')
-  .action(async (options: { verbose: number }, url: string) =>
-    console.log(await querySite(url, options.verbose ?? 0))
+  .action(async (options: { json: boolean }, url: string) =>
+    console.log(await getSiteResults(url, options.json))
   )
   .command('site', siteCmd)
   .command('data', dateCmd)
