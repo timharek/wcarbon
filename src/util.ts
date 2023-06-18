@@ -137,24 +137,38 @@ export async function getSiteResults(
   const result = await querySite(url);
 
   if (!json) {
-    if (result.green === true) {
-      return Colors.black(
-        Colors.bgGreen(
-          `Hurrah! ${url} is is cleaner than ${
-            result.cleanerThan * 100
-          }% of web pages tested.`,
-        ),
-      );
-    } else {
-      return Colors.black(
-        Colors.bgRed(
-          `Uh oh! ${url} is is dirtier than ${
-            result.cleanerThan * 100
-          }% of web pages tested.`,
-        ),
-      );
-    }
+    return cleanOrDirty(result, url);
   }
 
   return JSON.stringify(result, null, 2);
+}
+
+function cleanOrDirty(site: WCarbon.ISite, url: string): string {
+  if (site.green === true) {
+    return Colors.black(
+      Colors.bgGreen(
+        `Hurrah! ${url} is is cleaner than ${site.cleanerThan} of web pages tested.`,
+      ),
+    );
+  } else if (site.green === 'unknown') {
+    const cleanerThan = Number(site.cleanerThan.replace('%', ''));
+    if (cleanerThan > 50) {
+      return Colors.black(
+        Colors.bgBrightWhite(
+          `Hurrah! ${url} is is cleaner than ${site.cleanerThan} of web pages tested.`,
+        ),
+      );
+    }
+    return Colors.black(
+      Colors.bgRed(
+        `Uh oh! ${url} is is dirtier than ${site.cleanerThan} of web pages tested.`,
+      ),
+    );
+  } else {
+    return Colors.black(
+      Colors.bgRed(
+        `Uh oh! ${url} is is dirtier than ${site.cleanerThan} of web pages tested.`,
+      ),
+    );
+  }
 }
