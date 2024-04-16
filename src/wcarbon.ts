@@ -1,5 +1,4 @@
-// @deno-types='../mod.d.ts'
-
+import { DataResponse, SiteResponse } from './schemas.ts';
 import {
   _fetch,
   calculateEnergy,
@@ -9,6 +8,50 @@ import {
 } from './util.ts';
 
 const REQUEST_URL = 'https://api.websitecarbon.com';
+
+export async function site(
+  siteURL: string | URL,
+): Promise<SiteResponse | null> {
+  if (!isValidUrl(siteURL)) {
+    console.error('Invalid URL');
+    return null;
+  }
+
+  const url = new URL(`${REQUEST_URL}/site?url=${siteURL}`);
+
+  const response = await _fetch(url);
+
+  try {
+    const result = SiteResponse.parse(response);
+    return result;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+type DataRequest = {
+  bytes: number;
+  hasGreenHosting: boolean;
+};
+
+export async function data(
+  { bytes, hasGreenHosting }: DataRequest,
+): Promise<DataResponse | null> {
+  const url = new URL(
+    `${REQUEST_URL}/data?bytes=${bytes}&green=${+hasGreenHosting}`,
+  );
+
+  const response = await _fetch(url);
+
+  try {
+    const result = DataResponse.parse(response);
+    return result;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
 
 export async function querySite(url: string): Promise<WCarbon.ISite> {
   if (!isValidUrl(url)) {
@@ -36,10 +79,10 @@ export async function querySite(url: string): Promise<WCarbon.ISite> {
 }
 
 export async function queryData(request: DataRequest): Promise<WCarbon.IData> {
-  const { bytes, green } = request;
+  const { bytes, hasGreenHosting } = request;
   const requestUrl = new URL(`${REQUEST_URL}/data`);
   requestUrl.searchParams.set('bytes', `${bytes}`);
-  requestUrl.searchParams.set('green', `${green}`);
+  requestUrl.searchParams.set('green', `${hasGreenHosting}`);
 
   const result = (await _fetch(requestUrl)) as WebsiteCarbon.DataResponse;
 

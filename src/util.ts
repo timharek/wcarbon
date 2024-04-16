@@ -65,9 +65,9 @@ export function calculateEnergy(amount: number): string {
  *
  * @returns boolean
  */
-export function isValidUrl(url: string): boolean {
+export function isValidUrl(url: string | URL): boolean {
   // Checks if there is a period in case there is no TLD provided.
-  if (!/\./.test(url)) {
+  if (!/\./.test(url.toString())) {
     console.error(
       '%cDid you forget to provide a TLD?',
       'color: white; background-color: red; font-weight: bold',
@@ -75,7 +75,7 @@ export function isValidUrl(url: string): boolean {
     return false;
   }
   try {
-    if (!containsHttpString(url)) {
+    if (!containsHttpString(url.toString())) {
       url = `https://${url}`;
     }
     new URL(url);
