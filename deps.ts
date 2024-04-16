@@ -6,3 +6,4 @@ export {
   assertExists,
   assertFalse,
 } from 'https://deno.land/std@0.223.0/assert/mod.ts';
+export { toKebabCase } from 'https://deno.land/std@0.223.0/text/mod.ts';
