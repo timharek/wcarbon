@@ -12,18 +12,18 @@ carbon emissions for websites.
 ### Example for site
 
 ```ts
-import { querySite } from 'https://deno.land/x/wcarbon/mod.ts';
+import { querySite } from "https://deno.land/x/wcarbon/mod.ts";
 
-const domain = 'example.org';
+const domain = "example.org";
 const result = querySite(domain);
 ```
 
 ### Example for data
 
 ```ts
-import { queryData } from 'https://deno.land/x/wcarbon/mod.ts';
+import { queryData } from "https://deno.land/x/wcarbon/mod.ts";
 
-const bytes = '1024';
+const bytes = "1024";
 const result = queryData(bytes);
 ```
 
@@ -48,6 +48,5 @@ $ wcarbon -h # for all available flags and commands
 ## Development
 
 1. Install [Deno](https://deno.land)
-1. Install [githooked](https://github.com/amethyst-studio/githooked/#installation)
-1. Run `githooked enable`
+1. Run `deno task setup:hooks`
 1. Now you can get to work! :sunglasses:
