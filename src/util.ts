@@ -1,8 +1,3 @@
-// @deno-types='../mod.d.ts'
-
-import { Colors } from '../deps.ts';
-import { querySite } from './wcarbon.ts';
-
 /**
  * Helper fetch-function.
  * @param url The URL to be fetched
@@ -128,47 +123,4 @@ function slugify(text: string): string {
 export function getWebsiteCarbonUrl(url: string): string {
   const shortUrl = stripHttpString(url);
   return `https://websitecarbon.com/website/${slugify(shortUrl)}`;
-}
-
-export async function getSiteResults(
-  url: string,
-  json: boolean,
-): Promise<string> {
-  const result = await querySite(url);
-
-  if (!json) {
-    return cleanOrDirty(result, url);
-  }
-
-  return JSON.stringify(result, null, 2);
-}
-
-function cleanOrDirty(site: WCarbon.ISite, url: string): string {
-  if (site.green === true) {
-    return Colors.black(
-      Colors.bgGreen(
-        `Hurrah! ${url} is is cleaner than ${site.cleanerThan} of web pages tested.`,
-      ),
-    );
-  } else if (site.green === 'unknown') {
-    const cleanerThan = Number(site.cleanerThan.replace('%', ''));
-    if (cleanerThan > 50) {
-      return Colors.black(
-        Colors.bgBrightWhite(
-          `Hurrah! ${url} is is cleaner than ${site.cleanerThan} of web pages tested.`,
-        ),
-      );
-    }
-    return Colors.black(
-      Colors.bgRed(
-        `Uh oh! ${url} is is dirtier than ${site.cleanerThan} of web pages tested.`,
-      ),
-    );
-  } else {
-    return Colors.black(
-      Colors.bgRed(
-        `Uh oh! ${url} is is dirtier than ${site.cleanerThan} of web pages tested.`,
-      ),
-    );
-  }
 }

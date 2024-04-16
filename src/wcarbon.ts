@@ -1,4 +1,4 @@
-import { DataResponse, SiteResponse } from './schemas.ts';
+import { CO2, DataResponse, SiteResponse } from './schemas.ts';
 import {
   _fetch,
   calculateEnergy,
@@ -30,7 +30,7 @@ export async function site(
   }
 }
 
-type DataRequest = {
+export type DataRequest = {
   bytes: number;
   hasGreenHosting: boolean;
 };
@@ -53,45 +53,43 @@ export async function data(
   }
 }
 
-export async function querySite(url: string): Promise<WCarbon.ISite> {
-  if (!isValidUrl(url)) {
-    console.error('Invalid URL');
-    Deno.exit(-1);
-  }
-
-  const requestUrl = new URL(`${REQUEST_URL}/site`);
-  requestUrl.searchParams.set('url', url);
-
-  const response = (await _fetch(requestUrl)) as WebsiteCarbon.SiteResponse;
-
+export interface SiteCalculated {
+  green: boolean | 'unknown';
+  size: string;
+  cleanerThan: string;
+  energy_pr_load: string;
+  co2: CO2;
+  time: string;
+  wcarbonUrl: string;
+}
+export function siteCalcuated(site: SiteResponse): SiteCalculated {
   return {
-    green: response.green,
-    size: calculateSize(response.bytes),
-    cleanerThan: `${response.cleanerThan * 100}%`,
-    energy_pr_load: calculateEnergy(response.statistics.energy),
+    green: site.green,
+    size: calculateSize(site.bytes),
+    cleanerThan: `${site.cleanerThan * 100}%`,
+    energy_pr_load: calculateEnergy(site.statistics.energy),
     co2: {
-      grid: `${response.statistics.co2.grid.grams.toFixed(4)} g`,
-      renewable: `${response.statistics.co2.renewable.grams.toFixed(4)} g`,
+      grid: `${site.statistics.co2.grid.grams.toFixed(4)} g`,
+      renewable: `${site.statistics.co2.renewable.grams.toFixed(4)} g`,
     },
     time: `${new Date().toISOString()}`,
-    wcarbonUrl: getWebsiteCarbonUrl(url),
-  } as WCarbon.ISite;
+    wcarbonUrl: getWebsiteCarbonUrl(site.url),
+  };
 }
 
-export async function queryData(request: DataRequest): Promise<WCarbon.IData> {
-  const { bytes, hasGreenHosting } = request;
-  const requestUrl = new URL(`${REQUEST_URL}/data`);
-  requestUrl.searchParams.set('bytes', `${bytes}`);
-  requestUrl.searchParams.set('green', `${hasGreenHosting}`);
+export type Data = {
+  cleanerThan: string;
+  energy_pr_load: string;
+  co2: CO2;
+};
 
-  const result = (await _fetch(requestUrl)) as WebsiteCarbon.DataResponse;
-
+export function dataCalcuated(data: DataResponse): Data {
   return {
-    cleanerThan: `${result.cleanerThan * 100}%`,
-    energy_pr_load: calculateEnergy(result.statistics.energy),
+    cleanerThan: `${data.cleanerThan * 100}%`,
+    energy_pr_load: calculateEnergy(data.statistics.energy),
     co2: {
-      grid: `${result.statistics.co2.grid.grams.toFixed(4)} g`,
-      renewable: `${result.statistics.co2.renewable.grams.toFixed(4)} g`,
+      grid: `${data.statistics.co2.grid.grams.toFixed(4)} g`,
+      renewable: `${data.statistics.co2.renewable.grams.toFixed(4)} g`,
     },
-  } as WCarbon.IData;
+  };
 }

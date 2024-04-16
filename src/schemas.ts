@@ -37,18 +37,4 @@ const co2 = z.object({
   renewable: z.string(),
 });
 
-const Site = z.object({
-  green: z.boolean().or(z.literal('unknown')),
-  size: z.string(),
-  cleanerThan: z.string(),
-  energy_pr_load: z.string(),
-  co2,
-  time: z.string(),
-  wcarbonUrl: z.string().url(),
-});
-
-const Data = z.object({
-  cleanerThan: z.string(),
-  energy_pr_load: z.string(),
-  co2,
-});
+export type CO2 = z.infer<typeof co2>;
