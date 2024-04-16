@@ -1,7 +1,4 @@
-import {
-  assertEquals,
-  assertExists,
-} from 'https://deno.land/std@0.223.0/assert/mod.ts';
+import { assertEquals, assertExists } from '../deps.ts';
 import { data, site } from './wcarbon.ts';
 
 Deno.test('Test site example.org', async () => {

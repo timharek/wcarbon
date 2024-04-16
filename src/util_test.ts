@@ -1,7 +1,4 @@
-import {
-  assertEquals,
-  assertFalse,
-} from 'https://deno.land/std@0.175.0/testing/asserts.ts';
+import { assertEquals, assertFalse } from '../deps.ts';
 import {
   calculateEnergy,
   calculateSize,
