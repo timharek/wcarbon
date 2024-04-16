@@ -1,7 +1,12 @@
 {
   "tasks": {
     "run": "deno run --allow-net=api.websitecarbon.com,api.github.com src/cli.ts",
-    "check": "deno lint && deno fmt --check && deno check **/*.ts"
+    "check": "deno lint && deno fmt --check && deno check **/*.ts",
+    "setup:hooks": "deno run -A -r https://deno.land/x/githooks/githooks.ts"
+  },
+  "githooks": {
+    "pre-commit": "check",
+    "pre-push": "check"
   },
   "lint": {
     "include": [
