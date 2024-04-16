@@ -1,4 +1,7 @@
 {
+  "tasks": {
+    "run": "deno run --allow-net=api.websitecarbon.com,api.github.com src/cli.ts"
+  },
   "lint": {
     "include": [
       "./"
@@ -21,8 +24,5 @@
     "indentWidth": 2,
     "singleQuote": true,
     "proseWrap": "preserve"
-  },
-  "tasks": {
-    "run": "deno run --allow-net=api.websitecarbon.com,api.github.com src/cli.ts"
   }
 }
