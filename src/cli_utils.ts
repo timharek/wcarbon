@@ -17,7 +17,7 @@ export async function siteOutput(
     return cleanOrDirty(response);
   }
 
-  if (!calculated) {
+  if (calculated) {
     return JSON.stringify(siteCalcuated(response), null, 2);
   }
   return JSON.stringify(response, null, 2);
