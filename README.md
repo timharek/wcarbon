@@ -12,19 +12,18 @@ carbon emissions for websites.
 ### Example for site
 
 ```ts
-import { querySite } from "https://deno.land/x/wcarbon/mod.ts";
+import { site } from "https://deno.land/x/wcarbon/mod.ts";
 
-const domain = "example.org";
-const result = querySite(domain);
+const siteUrl = "example.org";
+const result = site(siteUrl);
 ```
 
 ### Example for data
 
 ```ts
-import { queryData } from "https://deno.land/x/wcarbon/mod.ts";
+import { data } from "https://deno.land/x/wcarbon/mod.ts";
 
-const bytes = "1024";
-const result = queryData(bytes);
+const result = data({ bytes: 1024, hasGreenHosting: false });
 ```
 
 ## CLI
