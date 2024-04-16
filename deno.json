@@ -1,4 +1,7 @@
 {
+  "name": "wcarbon",
+  "version": "3.0.0",
+  "description": "Query webpages (URLs) via Website Carbons API.",
   "tasks": {
     "run": "deno run --allow-net=api.websitecarbon.com,api.github.com src/cli.ts",
     "check": "deno lint && deno fmt --check && deno check **/*.ts",

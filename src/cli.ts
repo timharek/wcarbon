@@ -1,10 +1,11 @@
+import config from '../deno.json' with { type: 'json' };
 import { Command } from '../deps.ts';
 import { dataOutput, siteOutput } from './cli_utils.ts';
 
 const app = new Command()
-  .name('wcarbon')
-  .version('2.0.0')
-  .description('Query webpages (URLs) via Website Carbons API.')
+  .name(config.name)
+  .version(`v${config.version}`)
+  .description(config.description)
   .meta('Author', 'Tim Hårek Andreassen <tim@harek.no>')
   .meta('Source', 'https://github.com/timharek/wcarbon')
   .example(
