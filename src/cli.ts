@@ -3,7 +3,7 @@ import { Command } from '../deps.ts';
 import { dataOutput, siteOutput } from './cli_utils.ts';
 
 const app = new Command()
-  .name(config.name)
+  .name(config.name.split('/').at(-1) ?? config.name)
   .version(`v${config.version}`)
   .description(config.description)
   .meta('Author', 'Tim Hårek Andreassen <tim@harek.no>')
