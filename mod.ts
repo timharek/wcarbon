@@ -7,14 +7,14 @@
  * import { site } from 'https://deno.land/x/wcarbon/mod.ts';
  *
  * const siteUrl = 'example.org';
- * const result = site(siteUrl);
+ * const result = await site(siteUrl);
  * ```
  *
  * ## Example for data
  * ```ts
  * import { data } from 'https://deno.land/x/wcarbon/mod.ts';
  *
- * const result = data({bytes: 1024, hasGreenHosting: true});
+ * const result = await data({bytes: 1024, hasGreenHosting: true});
  * ```
  * @module
  */
