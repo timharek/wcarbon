@@ -19,6 +19,11 @@ tasks:
       if [ "$(git rev-parse origin/main)" != "$(git rev-parse HEAD)" ]; then \
         complete-build; \
       fi
+  - new_release: |
+      set +x
+      export JSR_API=$(cat ~/jsr_timharek)
+      set -x
+      deno publish --allow-slow-types --token $JSR_API
   - mirror: |
       cd $dir
       git remote add github git@github.com:timharek/wcarbon.git
