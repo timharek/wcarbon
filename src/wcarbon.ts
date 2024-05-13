@@ -9,6 +9,12 @@ import {
 
 const REQUEST_URL = 'https://api.websitecarbon.com';
 
+/**
+ * Calculate the carbon emissions generated per page view.
+ *
+ * @param siteURL page that you want to calcuate
+ * @throws if there is an error with the request
+ */
 export async function site(
   siteURL: string | URL,
 ): Promise<SiteResponse | null> {
@@ -35,6 +41,14 @@ export type DataRequest = {
   hasGreenHosting: boolean;
 };
 
+/**
+ * Calculate the emissions of a page by manually passing the bytes and whether
+ * or not it is powered by green hosting.
+ *
+ * @param data Takes in both `bytes` and `hasGreenHosting` args to calculate the
+ * emissions.
+ * @throws if there is an error with the request.
+ */
 export async function data(
   { bytes, hasGreenHosting }: DataRequest,
 ): Promise<DataResponse | null> {
