@@ -3,6 +3,7 @@ packages:
   - deno
 secrets:
   - 0323bc6f-a046-4b96-8496-2bac6e7ee107
+  - 0f45fdd0-5af6-4cfb-bece-754aee60fdd6
 environment:
   dir: wcarbon
 triggers:
