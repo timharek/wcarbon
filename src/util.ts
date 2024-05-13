@@ -106,7 +106,7 @@ export function stripHttpString(url: string): string {
  * @return slugified string
  */
 function slugify(text: string): string {
-  return toKebabCase(text);
+  return toKebabCase(text.replace('.', '-'));
 }
 
 /**
