@@ -3,7 +3,7 @@ packages:
   - deno
 secrets:
   - 0323bc6f-a046-4b96-8496-2bac6e7ee107
-  - 0f45fdd0-5af6-4cfb-bece-754aee60fdd6
+  - 6a295705-4fb6-451c-990c-9a12b0aa0dc2
 environment:
   dir: wcarbon
 triggers:
@@ -23,8 +23,9 @@ tasks:
   - new_release: |
       set +x
       export JSR_API=$(cat ~/jsr_timharek)
-      set -x
+      cd $dir
       deno publish --allow-slow-types --token $JSR_API
+      set -x
   - mirror: |
       cd $dir
       git remote add github git@github.com:timharek/wcarbon.git
