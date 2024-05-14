@@ -2,7 +2,10 @@
   "name": "@timharek/wcarbon",
   "version": "3.0.2",
   "description": "Query webpages (URLs) via Website Carbons API.",
-  "exports": "./mod.ts",
+  "exports": {
+    ".": "./mod.ts",
+    "./cli": "./src/cli.ts"
+  },
   "tasks": {
     "run": "deno run --allow-net=api.websitecarbon.com,api.github.com src/cli.ts",
     "check": "deno lint && deno fmt --check && deno check **/*.ts",

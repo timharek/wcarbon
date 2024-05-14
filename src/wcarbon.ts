@@ -14,6 +14,13 @@ const REQUEST_URL = 'https://api.websitecarbon.com';
  *
  * @param siteURL page that you want to calcuate
  * @throws if there is an error with the request
+ * @example
+ * ```ts
+ * import { site } from 'jsr:@timharek/wcarbon';
+ *
+ * const siteUrl = 'example.org';
+ * const result = await site(siteUrl);
+ * ```
  */
 export async function site(
   siteURL: string | URL,
@@ -48,6 +55,13 @@ export type DataRequest = {
  * @param data Takes in both `bytes` and `hasGreenHosting` args to calculate the
  * emissions.
  * @throws if there is an error with the request.
+ * @example
+ * ## Example for data
+ * ```ts
+ * import { data } from 'jsr:@timharek/wcarbon';
+ *
+ * const result = await data({bytes: 1024, hasGreenHosting: true});
+ * ```
  */
 export async function data(
   { bytes, hasGreenHosting }: DataRequest,

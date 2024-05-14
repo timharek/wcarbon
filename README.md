@@ -12,7 +12,7 @@ carbon emissions for websites.
 ### Example for site
 
 ```ts
-import { site } from "https://deno.land/x/wcarbon/mod.ts";
+import { site } from "jsr:@timharek/wcarbon";
 
 const siteUrl = "example.org";
 const result = await site(siteUrl);
@@ -21,7 +21,7 @@ const result = await site(siteUrl);
 ### Example for data
 
 ```ts
-import { data } from "https://deno.land/x/wcarbon/mod.ts";
+import { data } from "jsr:@timharek/wcarbon";
 
 const result = await data({ bytes: 1024, hasGreenHosting: false });
 ```
@@ -32,7 +32,7 @@ const result = await data({ bytes: 1024, hasGreenHosting: false });
 
 ```sh
 deno install --allow-net=api.websitecarbon.com \
-   -n wcarbon https://deno.land/x/wcarbon/src/cli.ts
+   -n wcarbon jsr:@timharek/wcarbon/cli
 ```
 
 ### Usage
