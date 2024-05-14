@@ -1,3 +1,17 @@
+/**
+ * Access [Website Carbon's API](https://api.websitecarbon.com/) for checking
+ * carbon emissions for websites via a CLI.
+ *
+ * ## Installation
+ *
+ * ```sh
+ * deno install --allow-net=api.websitecarbon.com \
+ *    -n wcarbon jsr:@timharek/wcarbon/cli
+ * ```
+ *
+ * @module
+ */
+
 import config from '../deno.json' with { type: 'json' };
 import { Command } from '../deps.ts';
 import { dataOutput, siteOutput } from './cli_utils.ts';
@@ -15,6 +29,10 @@ const app = new Command()
   .globalOption('--json', 'Display JSON output.')
   .globalOption('-c, --calculated', 'Display calculated JSON output.');
 
+/**
+ * Only relevant the CLI's options.
+ * @private
+ */
 export type GlobalOptions = typeof app extends
   Command<void, void, void, [], infer Options extends Record<string, unknown>>
   ? Options

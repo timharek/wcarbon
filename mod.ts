@@ -16,6 +16,12 @@
  *
  * const result = await data({bytes: 1024, hasGreenHosting: true});
  * ```
+ *
+ * ## Install CLI
+ * ```sh
+ * deno install --allow-net=api.websitecarbon.com \
+ *    -n wcarbon jsr:@timharek/wcarbon/cli
+ * ```
  * @module
  */
 
